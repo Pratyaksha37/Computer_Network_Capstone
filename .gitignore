@@ -1,0 +1,21 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# macOS
+.DS_Store
+
+# TLS private keys
+*.key
+*.pem
+
+# Local certificates
+*.crt
+
+# Local machine configuration
+.env
+.env.*
+
+# Editor
+.vscode/
+.idea/

@@ -1,0 +1,42 @@
+events {}
+
+http {
+
+    upstream backend_servers {
+        server MAC3_IP:3001;
+        server MAC4_IP:3002;
+    }
+
+    # HTTP
+    server {
+        listen 8080;
+        server_name app.teamX.test api.teamX.test;
+
+        location / {
+            proxy_pass http://backend_servers;
+
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+
+    # HTTPS
+    server {
+        listen 8443 ssl;
+        server_name app.teamX.test api.teamX.test;
+
+        ssl_certificate /PATH/TO/teamX.crt;
+        ssl_certificate_key /PATH/TO/teamX.key;
+
+        location / {
+            proxy_pass http://backend_servers;
+
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+}

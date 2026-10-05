@@ -1,0 +1,17 @@
+# Private DNS server for Phase 1
+
+port=53
+
+# Listen on all network interfaces
+listen-address=0.0.0.0
+bind-interfaces
+
+# Project DNS records
+# Replace MAC2_IP with the current LAN IP of Mac 2.
+
+address=/app.teamX.test/MAC2_IP
+address=/api.teamX.test/MAC2_IP
+
+# Forward all other DNS queries to public DNS
+server=8.8.8.8
+server=1.1.1.1

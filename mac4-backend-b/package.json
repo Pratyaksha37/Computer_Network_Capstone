@@ -1,0 +1,12 @@
+{
+  "name": "backend-b",
+  "version": "1.0.0",
+  "description": "Phase 1 Backend B for Private Network Service Platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.0.0"
+  }
+}
