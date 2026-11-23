@@ -1,0 +1,13 @@
+# Mac 4 - independent backup DNS (10.7.31.174)
+
+port=53
+listen-address=127.0.0.1,10.7.31.174
+bind-interfaces
+local-ttl=30
+
+address=/app.team1.test/10.7.21.33
+address=/api.team1.test/10.7.21.33
+address=/ttl.team1.test/10.7.21.33
+
+server=8.8.8.8
+server=1.1.1.1
