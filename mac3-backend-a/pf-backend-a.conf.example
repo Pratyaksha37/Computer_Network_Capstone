@@ -1,0 +1,11 @@
+# Mac 3 - isolate Backend A on TCP 3001.
+# Replace en0 only if the active LAN interface is different.
+# Anchor fragment only: validate and integrate with the existing PF ruleset.
+# Save the original rules and restore them after the demonstration.
+# IPv4 policy; IPv6 listeners require a corresponding policy.
+
+backend_a = "10.7.12.98"
+approved_edges = "{ 10.7.21.33, 10.7.31.174 }"
+
+pass in quick on en0 proto tcp from $approved_edges to $backend_a port 3001 keep state
+block drop in quick on en0 proto tcp from any to $backend_a port 3001
