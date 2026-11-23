@@ -1,0 +1,44 @@
+events {}
+
+http {
+    upstream backend_servers {
+        server 10.7.12.98:3001 max_fails=1 fail_timeout=10s;
+        server 127.0.0.1:3002 max_fails=1 fail_timeout=10s;
+    }
+
+    server {
+        listen 8080;
+        server_name app.team1.test api.team1.test;
+
+        location / {
+            proxy_pass http://backend_servers;
+            proxy_connect_timeout 2s;
+            proxy_read_timeout 10s;
+            proxy_next_upstream error timeout http_502 http_503 http_504;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+
+    server {
+        listen 8443 ssl;
+        server_name app.team1.test api.team1.test;
+
+        ssl_certificate /PATH/TO/app.team1.test.crt;
+        ssl_certificate_key /PATH/TO/app.team1.test.key;
+        ssl_protocols TLSv1.2 TLSv1.3;
+
+        location / {
+            proxy_pass http://backend_servers;
+            proxy_connect_timeout 2s;
+            proxy_read_timeout 10s;
+            proxy_next_upstream error timeout http_502 http_503 http_504;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+}
